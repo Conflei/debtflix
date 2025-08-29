@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/router/app_router.gr.dart';
+import 'package:debtflix/features/credit/widgets/credit_factors_scroll.dart';
 import 'package:debtflix/features/user/providers/user_providers.dart';
+import 'package:debtflix/features/credit/widgets/credit_score_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +28,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.purple,
       appBar: AppBar(
         backgroundColor: AppColors.purple,
         leading: IconButton(
@@ -46,75 +48,167 @@ class _CreditPageState extends ConsumerState<CreditPage> {
         actions: [],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 140.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40.r),
-                  bottomRight: Radius.circular(40.r),
+        child: Container(
+          color: AppColors.background,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 140.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40.r),
+                    bottomRight: Radius.circular(40.r),
+                  ),
+                  color: AppColors.purple,
                 ),
-                color: AppColors.purple,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: 10.h,
-                  left: 20.w,
-                  right: 20.w,
-                  bottom: 20.h,
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    borderRadius: BorderRadius.circular(30.r),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10.h,
+                    left: 20.w,
+                    right: 20.w,
+                    bottom: 20.h,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(30.r),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 7,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Credit Score",
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(
+                                          20.r,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 6.0,
+                                          ),
+                                          child: Text(
+                                            "+2pts",
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                Text(
+                                  "Updated Today | Next May 12",
+                                  style: TextStyle(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  "Experian",
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.purple.withAlpha(128),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            width: 50.w,
+                            height: 50.h,
+                            color: AppColors.purple,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            Container(
-              width: double.infinity,
-              height: 100.h,
-              decoration: BoxDecoration(
-                color: AppColors.background,
-                borderRadius: BorderRadius.circular(30.r),
-              ),
-              padding: EdgeInsets.all(20.w),
-              child: ListView.builder(
-                itemCount: user.creditData.prevScores.length,
-                itemBuilder: (context, index) {
-                  final creditReport = user.creditData.prevScores[index];
-                  return Text(
-                    "Credit Score: ${creditReport.value} Date: ${creditReport.key}",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                },
-              ),
-            ),
+              SizedBox(height: 20.h),
 
-            Container(
-              width: double.infinity,
-              height: 100.h,
-              decoration: BoxDecoration(
-                color: AppColors.background,
-                borderRadius: BorderRadius.circular(30.r),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CreditScoreChart(),
               ),
-              padding: EdgeInsets.all(20.w),
-              child: ListView.builder(
-                itemCount: user.creditData.creditCardAccounts.length,
-                itemBuilder: (context, index) {
-                  final creditCardAccount =
-                      user.creditData.creditCardAccounts[index];
-                  return Text(creditCardAccount.name);
-                },
+
+              // SizedBox(height: 20.h),
+
+              // CreditFactorsScroll(),
+
+              // SizedBox(height: 20.h),
+              Container(
+                width: double.infinity,
+                height: 100.h,
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+                padding: EdgeInsets.all(20.w),
+                child: ListView.builder(
+                  itemCount: user.creditData.prevScores.length,
+                  itemBuilder: (context, index) {
+                    final creditReport = user.creditData.prevScores[index];
+                    return Text(
+                      "Credit Score: ${creditReport.value} Date: ${creditReport.key}",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+
+              Container(
+                width: double.infinity,
+                height: 100.h,
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+                padding: EdgeInsets.all(20.w),
+                child: ListView.builder(
+                  itemCount: user.creditData.creditCardAccounts.length,
+                  itemBuilder: (context, index) {
+                    final creditCardAccount =
+                        user.creditData.creditCardAccounts[index];
+                    return Text(creditCardAccount.name);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
