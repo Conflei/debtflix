@@ -7,6 +7,13 @@ class User {
   final CreditData creditData;
 
   User({required this.employmentData, required this.creditData});
+
+  User copyWith({EmploymentData? employmentData, CreditData? creditData}) {
+    return User(
+      employmentData: employmentData ?? this.employmentData,
+      creditData: creditData ?? this.creditData,
+    );
+  }
 }
 
 class UserAdapter extends TypeAdapter<User> {
