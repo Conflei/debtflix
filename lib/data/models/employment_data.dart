@@ -9,7 +9,7 @@ class EmploymentData {
   final String employerAddress;
   final int yearsAtEmployer;
   final int monthsAtEmployer;
-  final DateTime nextPayDate;
+  final String nextPayDate;
   final bool isDirectDeposit;
 
   EmploymentData({
@@ -51,7 +51,7 @@ class EmploymentDataAdapter extends TypeAdapter<EmploymentData> {
       employerAddress: employerAddress,
       yearsAtEmployer: yearsAtEmployer,
       monthsAtEmployer: monthsAtEmployer,
-      nextPayDate: DateTime.parse(nextPayDate),
+      nextPayDate: nextPayDate,
       isDirectDeposit: isDirectDeposit,
     );
   }
@@ -66,7 +66,7 @@ class EmploymentDataAdapter extends TypeAdapter<EmploymentData> {
     writer.writeString(obj.employerAddress);
     writer.writeInt(obj.yearsAtEmployer);
     writer.writeInt(obj.monthsAtEmployer);
-    writer.writeString(obj.nextPayDate.toIso8601String());
+    writer.writeString(obj.nextPayDate);
     writer.writeBool(obj.isDirectDeposit);
   }
 }

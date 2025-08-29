@@ -15,9 +15,15 @@ class UserAdapter extends TypeAdapter<User> {
 
   @override
   User read(BinaryReader reader) {
-    final employmentData = reader.read() as EmploymentData;
-    final creditData = reader.read() as CreditData;
-    return User(employmentData: employmentData, creditData: creditData);
+    try {
+      final employmentData = reader.read() as EmploymentData;
+      final creditData = reader.read() as CreditData;
+      return User(employmentData: employmentData, creditData: creditData);
+    } catch (e) {
+      throw HiveError(
+        'Failed to read User data. The data format may have changed. Please clear app data.',
+      );
+    }
   }
 
   @override

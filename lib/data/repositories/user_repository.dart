@@ -7,10 +7,10 @@ class UserRepository {
   UserRepository(this._box);
 
   User? getUser() {
-    return _box.get('user');
+    return _box.get("Alpha");
   }
 
   Future<void> saveUser(User user) async {
-    await _box.put('user', user);
+    await _box.put("Alpha", user);
   }
 }

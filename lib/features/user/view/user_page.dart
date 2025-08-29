@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:debtflix/core/router/app_router.gr.dart';
 import 'package:debtflix/data/models/credit_data.dart';
 import 'package:debtflix/data/models/employment_data.dart';
 import 'package:debtflix/data/models/user.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/user_providers.dart';
 
+@RoutePage()
 class UserPage extends ConsumerStatefulWidget {
   const UserPage({super.key});
 
@@ -19,6 +22,15 @@ class _UserPageState extends ConsumerState<UserPage> {
 
     if (user == null) {
       return Scaffold(
+        appBar: AppBar(
+          title: const Text("User Info"),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.person_search_rounded),
+            ),
+          ],
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,13 +45,15 @@ class _UserPageState extends ConsumerState<UserPage> {
                           employmentData: EmploymentData(
                             employer: "Test Employer",
                             annualIncome: 50000,
-                            employmentType: "Full-Time",
+                            employmentType: "Full-Time  ",
                             jobTitle: "Software Engineer",
                             payFrequency: "Monthly",
                             employerAddress: "123 Main St, Anytown, USA",
                             yearsAtEmployer: 5,
                             monthsAtEmployer: 3,
-                            nextPayDate: DateTime.now().add(Duration(days: 15)),
+                            nextPayDate: DateTime.now()
+                                .add(Duration(days: 15))
+                                .toIso8601String(),
                             isDirectDeposit: true,
                           ),
                           creditData: CreditData(creditScore: 750),
@@ -63,6 +77,12 @@ class _UserPageState extends ConsumerState<UserPage> {
           children: [
             Text("Employer: ${user.employmentData.employer}"),
             Text("Yearly Income: \$${user.employmentData.annualIncome}"),
+            ElevatedButton(
+              onPressed: () {
+                context.router.push(CreditRoute());
+              },
+              child: const Text("Navigate to Credit Page"),
+            ),
           ],
         ),
       ),

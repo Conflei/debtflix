@@ -5,11 +5,19 @@ import '../../data/models/user.dart';
 import '../../data/models/employment_data.dart';
 
 Future<void> initHive() async {
+  print("Initializing Hive");
   final dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
 
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(EmploymentDataAdapter());
   Hive.registerAdapter(CreditDataAdapter());
-  await Hive.openBox<User>('userBox');
+
+  try {
+    await Hive.openBox<User>('userBox');
+  } catch (e) {
+    print("Error opening Hive: $e deleting box");
+    await Hive.deleteBoxFromDisk('userBox');
+    await Hive.openBox<User>('userBox');
+  }
 }
