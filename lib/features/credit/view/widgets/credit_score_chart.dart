@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../features/user/providers/user_providers.dart';
+import '../../../user/providers/user_providers.dart';
 
 class CreditScoreChart extends ConsumerWidget {
   const CreditScoreChart({super.key});

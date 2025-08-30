@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/router/app_router.gr.dart';
-import 'package:debtflix/features/credit/widgets/account_details_widget.dart';
-import 'package:debtflix/features/credit/widgets/credit_card_accounts_widget.dart';
-import 'package:debtflix/features/credit/widgets/credit_factors_scroll.dart';
+import 'package:debtflix/features/credit/view/widgets/account_details_widget.dart';
+import 'package:debtflix/features/credit/view/widgets/credit_card_accounts_widget.dart';
+import 'package:debtflix/features/credit/view/widgets/credit_factors_scroll.dart';
 import 'package:debtflix/features/user/providers/user_providers.dart';
-import 'package:debtflix/features/credit/widgets/credit_score_chart.dart';
+import 'package:debtflix/features/credit/view/widgets/credit_score_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
