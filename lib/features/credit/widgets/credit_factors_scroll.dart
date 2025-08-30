@@ -5,6 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CreditFactorsScroll extends StatelessWidget {
   CreditFactorsScroll({super.key});
 
+  // This items are static for now, they could be made more complex later by adding an
+  // specific class that will handle the logic on what is high impact or low impact for which
+  // factor and also the logic for the color of the impact.
+  // For now, we will just have a static list of items.
   final List<Map<String, dynamic>> items = [
     {
       'title': 'Payment History',

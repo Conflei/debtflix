@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/router/app_router.gr.dart';
+import 'package:debtflix/features/credit/widgets/account_details_widget.dart';
+import 'package:debtflix/features/credit/widgets/credit_card_accounts_widget.dart';
 import 'package:debtflix/features/credit/widgets/credit_factors_scroll.dart';
 import 'package:debtflix/features/user/providers/user_providers.dart';
 import 'package:debtflix/features/credit/widgets/credit_score_chart.dart';
@@ -57,8 +59,8 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                 height: 140.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40.r),
-                    bottomRight: Radius.circular(40.r),
+                    bottomLeft: Radius.circular(30.r),
+                    bottomRight: Radius.circular(30.r),
                   ),
                   color: AppColors.purple,
                 ),
@@ -72,7 +74,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.background,
-                      borderRadius: BorderRadius.circular(30.r),
+                      borderRadius: BorderRadius.circular(25.r),
                     ),
                     child: Row(
                       children: [
@@ -165,14 +167,19 @@ class _CreditPageState extends ConsumerState<CreditPage> {
               // SizedBox(height: 20.h),
 
               // CreditFactorsScroll(),
+              SizedBox(height: 20.h),
+              AccountDetailsWidget(),
 
-              // SizedBox(height: 20.h),
+              SizedBox(height: 20.h),
+              CreditCardAccountsWidget(),
+              SizedBox(height: 20.h),
+
               Container(
                 width: double.infinity,
                 height: 100.h,
                 decoration: BoxDecoration(
                   color: AppColors.background,
-                  borderRadius: BorderRadius.circular(30.r),
+                  borderRadius: BorderRadius.circular(25.r),
                 ),
                 padding: EdgeInsets.all(20.w),
                 child: ListView.builder(

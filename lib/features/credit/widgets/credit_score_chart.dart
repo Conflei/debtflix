@@ -39,7 +39,8 @@ class CreditScoreChart extends ConsumerWidget {
           height: 300.h,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(30.r),
+            borderRadius: BorderRadius.circular(25.r),
+            border: Border.all(color: Colors.grey.shade400, width: 1.w),
           ),
           child: Padding(
             padding: EdgeInsets.all(20.w),
