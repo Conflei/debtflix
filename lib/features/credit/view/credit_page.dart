@@ -157,63 +157,21 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                 ),
               ),
 
-              SizedBox(height: 20.h),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: CreditScoreChart(),
-              ),
-
               // SizedBox(height: 20.h),
 
-              // CreditFactorsScroll(),
-              SizedBox(height: 20.h),
-              AccountDetailsWidget(),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              //   child: CreditScoreChart(),
+              // ),
 
+              // // SizedBox(height: 20.h),
+
+              // // CreditFactorsScroll(),
+              // SizedBox(height: 20.h),
+              // AccountDetailsWidget(),
               SizedBox(height: 20.h),
               CreditCardAccountsWidget(),
-              SizedBox(height: 20.h),
-
-              Container(
-                width: double.infinity,
-                height: 100.h,
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.circular(25.r),
-                ),
-                padding: EdgeInsets.all(20.w),
-                child: ListView.builder(
-                  itemCount: user.creditData.prevScores.length,
-                  itemBuilder: (context, index) {
-                    final creditReport = user.creditData.prevScores[index];
-                    return Text(
-                      "Credit Score: ${creditReport.value} Date: ${creditReport.key}",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              Container(
-                width: double.infinity,
-                height: 100.h,
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.circular(30.r),
-                ),
-                padding: EdgeInsets.all(20.w),
-                child: ListView.builder(
-                  itemCount: user.creditData.creditCardAccounts.length,
-                  itemBuilder: (context, index) {
-                    final creditCardAccount =
-                        user.creditData.creditCardAccounts[index];
-                    return Text(creditCardAccount.name);
-                  },
-                ),
-              ),
+              SizedBox(height: 400.h),
             ],
           ),
         ),
