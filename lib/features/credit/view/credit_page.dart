@@ -4,6 +4,7 @@ import 'package:debtflix/core/router/app_router.gr.dart';
 import 'package:debtflix/features/credit/view/widgets/account_details_widget.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_card_accounts_widget.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_factors_scroll.dart';
+import 'package:debtflix/features/credit/view/widgets/feedback_modal.dart';
 import 'package:debtflix/features/user/providers/user_providers.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_score_chart.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,20 @@ class CreditPage extends ConsumerStatefulWidget {
 }
 
 class _CreditPageState extends ConsumerState<CreditPage> {
+  void waitAndShowFeedbackModal() async {
+    final currentContext = context;
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (mounted) {
+      showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: currentContext,
+        builder: (context) => const FeedbackModal(),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
@@ -35,7 +50,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
         backgroundColor: AppColors.purple,
         leading: IconButton(
           onPressed: () {
-            context.router.push(const UserRoute());
+            context.router.push(UserRoute(onConfirm: waitAndShowFeedbackModal));
           },
           icon: const Icon(Icons.settings, color: Colors.white),
         ),
@@ -47,7 +62,6 @@ class _CreditPageState extends ConsumerState<CreditPage> {
             fontWeight: FontWeight.w800,
           ),
         ),
-        actions: [],
       ),
       body: SingleChildScrollView(
         child: Container(

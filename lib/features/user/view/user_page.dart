@@ -16,7 +16,8 @@ import '../providers/user_providers.dart';
 
 @RoutePage()
 class UserPage extends ConsumerStatefulWidget {
-  const UserPage({super.key});
+  final Function onConfirm;
+  const UserPage({super.key, required this.onConfirm});
 
   @override
   ConsumerState<UserPage> createState() => _UserPageState();
@@ -32,10 +33,10 @@ class _UserPageState extends ConsumerState<UserPage> {
   }
 
   void _showConfirmationDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(title: const Text("Confirmation")),
-    );
+    print("showConfirmationDialog");
+    //
+    context.router.pop();
+    widget.onConfirm();
   }
 
   @override
@@ -129,9 +130,7 @@ class _UserPageState extends ConsumerState<UserPage> {
         onEdit: () {
           _updateEditingState(true);
         },
-        onConfirm: () {
-          _showConfirmationDialog();
-        },
+        onConfirm: _showConfirmationDialog,
       );
     }
 
