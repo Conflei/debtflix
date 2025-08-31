@@ -1,7 +1,11 @@
 import 'package:debtflix/core/hive/hive_setup.dart';
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/router/app_router.dart';
-import 'package:debtflix/features/user/view/user_page.dart';
+import 'package:debtflix/data/models/credit_card_account.dart';
+import 'package:debtflix/data/models/credit_data.dart';
+import 'package:debtflix/data/models/employment_data.dart';
+import 'package:debtflix/data/models/user.dart';
+import 'package:debtflix/features/user/providers/user_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +13,64 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
+  await _initializeDefaultUser();
   runApp(ProviderScope(child: MyApp()));
+}
+
+Future<void> _initializeDefaultUser() async {
+  final container = ProviderContainer();
+
+  try {
+    final userRepository = container.read(userRepositoryProvider);
+    final existingUser = userRepository.getUser();
+
+    // Only create default user if no user exists
+    if (existingUser == null) {
+      final defaultUser = User(
+        employmentData: EmploymentData(
+          employer: "Test Employer",
+          annualIncome: 50000,
+          employmentType: EmploymentType.fullTime,
+          jobTitle: "Software Engineer",
+          payFrequency: PayFrequency.monthly,
+          employerAddress: "123 Main St, Anytown, USA",
+          yearsAtEmployer: 5,
+          monthsAtEmployer: 3,
+          nextPayDate: DateTime.now().add(Duration(days: 15)).toIso8601String(),
+          isDirectDeposit: true,
+        ),
+        creditData: CreditData(
+          creditScore: 750,
+          prevScores: [
+            MapEntry(DateTime.now().subtract(Duration(days: 30)), 750),
+            MapEntry(DateTime.now().subtract(Duration(days: 90)), 740),
+            MapEntry(DateTime.now().subtract(Duration(days: 120)), 730),
+          ],
+          creditCardAccounts: [
+            CreditCardAccount(
+              name: "Syncb/Amazon",
+              balance: 100,
+              limit: 1000,
+              lastReported: DateTime.now().subtract(Duration(days: 10)),
+            ),
+            CreditCardAccount(
+              name: "Wells Fargo",
+              balance: 200,
+              limit: 3000,
+              lastReported: DateTime.now().subtract(Duration(days: 10)),
+            ),
+          ],
+        ),
+      );
+
+      await userRepository.saveUser(defaultUser);
+      print('Default user created successfully');
+    }
+  } catch (e) {
+    print('Error initializing default user: $e');
+  } finally {
+    container.dispose();
+  }
 }
 
 class MyApp extends StatelessWidget {

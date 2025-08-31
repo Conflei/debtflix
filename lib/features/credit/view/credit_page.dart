@@ -1,6 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/router/app_router.gr.dart';
+import 'package:debtflix/data/models/credit_card_account.dart';
+import 'package:debtflix/data/models/credit_data.dart';
+import 'package:debtflix/data/models/employment_data.dart';
+import 'package:debtflix/data/models/user.dart';
 import 'package:debtflix/features/credit/view/widgets/account_details_widget.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_card_accounts_widget.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_factors_scroll.dart';
@@ -32,6 +36,16 @@ class _CreditPageState extends ConsumerState<CreditPage> {
         builder: (context) => const FeedbackModal(),
       );
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

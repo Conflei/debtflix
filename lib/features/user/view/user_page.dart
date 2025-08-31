@@ -57,69 +57,7 @@ class _UserPageState extends ConsumerState<UserPage> {
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("No user data available"),
-              ElevatedButton(
-                onPressed: () {
-                  ref
-                      .read(userProvider.notifier)
-                      .createUser(
-                        User(
-                          employmentData: EmploymentData(
-                            employer: "Test Employer",
-                            annualIncome: 50000,
-                            employmentType: EmploymentType.fullTime,
-                            jobTitle: "Software Engineer",
-                            payFrequency: PayFrequency.monthly,
-                            employerAddress: "123 Main St, Anytown, USA",
-                            yearsAtEmployer: 5,
-                            monthsAtEmployer: 3,
-                            nextPayDate: DateTime.now()
-                                .add(Duration(days: 15))
-                                .toIso8601String(),
-                            isDirectDeposit: true,
-                          ),
-                          creditData: CreditData(
-                            creditScore: 750,
-                            prevScores: [
-                              MapEntry(
-                                DateTime.now().subtract(Duration(days: 30)),
-                                750,
-                              ),
-                              MapEntry(
-                                DateTime.now().subtract(Duration(days: 90)),
-                                740,
-                              ),
-                              MapEntry(
-                                DateTime.now().subtract(Duration(days: 120)),
-                                730,
-                              ),
-                            ],
-                            creditCardAccounts: [
-                              CreditCardAccount(
-                                name: "Syncb/Amazon",
-                                balance: 100,
-                                limit: 1000,
-                                lastReported: DateTime.now().subtract(
-                                  Duration(days: 10),
-                                ),
-                              ),
-                              CreditCardAccount(
-                                name: "Wells Fargo",
-                                balance: 200,
-                                limit: 3000,
-                                lastReported: DateTime.now().subtract(
-                                  Duration(days: 10),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                },
-                child: const Text("Add User"),
-              ),
-            ],
+            children: [const Text("No user data available")],
           ),
         ),
       );

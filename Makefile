@@ -44,3 +44,10 @@ setup: get build-runner
 
 # Clean and rebuild everything
 rebuild: clean get build-runner
+
+# Generate app icons
+icons:
+	flutter pub run flutter_launcher_icons:main
+
+# Setup with icons
+setup-with-icons: get gen icons
