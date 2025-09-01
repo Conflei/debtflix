@@ -1,0 +1,1 @@
+const int MAX_CREDIT_SCORE = 1000;

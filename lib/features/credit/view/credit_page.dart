@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:debtflix/core/misc/app_colors.dart';
+import 'package:debtflix/core/misc/constants.dart';
+import 'package:debtflix/core/misc/utils.dart';
 import 'package:debtflix/core/router/app_router.gr.dart';
 import 'package:debtflix/data/models/credit_card_account.dart';
 import 'package:debtflix/data/models/credit_data.dart';
 import 'package:debtflix/data/models/employment_data.dart';
 import 'package:debtflix/data/models/user.dart';
 import 'package:debtflix/features/credit/view/widgets/account_details_widget.dart';
+import 'package:debtflix/features/credit/view/widgets/circular_progress_widget.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_card_accounts_widget.dart';
 import 'package:debtflix/features/credit/view/widgets/credit_factors_scroll.dart';
 import 'package:debtflix/features/credit/view/widgets/feedback_modal.dart';
@@ -173,10 +176,15 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Container(
-                            width: 50.w,
-                            height: 50.h,
-                            color: AppColors.purple,
+                          child: CircularProgressWidget(
+                            title: user.creditData.prevScores.last.value
+                                .toStringAsFixed(0),
+                            subtitle: Utils.statusCreditScore(
+                              user.creditData.prevScores.last.value,
+                            ),
+                            percent:
+                                user.creditData.prevScores.last.value /
+                                MAX_CREDIT_SCORE,
                           ),
                         ),
                       ],

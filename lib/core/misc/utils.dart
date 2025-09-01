@@ -30,4 +30,24 @@ class Utils {
 
     return '$month $day, $year';
   }
+
+  static String statusCreditScore(int score) {
+    if (score >= 800) {
+      return "Excellent";
+    } else if (score >= 700) {
+      return "Good";
+    } else if (score >= 600) {
+      return "Fair";
+    } else {
+      return "Poor";
+    }
+  }
+
+  // NEW: utilization status based on utilization percent (0-100)
+  static String utilizationStatus(double utilizationPercent) {
+    final percent = utilizationPercent;
+    if (percent < 30) return 'Excellent';
+    if (percent < 50) return 'Good';
+    return 'Bad';
+  }
 }

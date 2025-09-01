@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/misc/utils.dart';
 import 'package:debtflix/data/models/credit_card_account.dart';
+import 'package:debtflix/features/credit/view/widgets/balance_percentage_bar.dart';
+import 'package:debtflix/features/credit/view/widgets/circular_progress_widget.dart';
 import 'package:debtflix/features/user/providers/user_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -111,6 +113,15 @@ class AccountDetailsWidget extends ConsumerWidget {
         child: const Center(child: Text('No credit score data available')),
       );
     }
+
+    final totalBalance = _calculateTotalBalance(
+      user.creditData.creditCardAccounts,
+    );
+    final totalLimit = _calculateTotalLimit(user.creditData.creditCardAccounts);
+
+    final utilizationPercent = totalLimit == 0
+        ? 0.0
+        : (totalBalance / totalLimit) * 100.0;
 
     return SizedBox(
       width: double.infinity,
@@ -295,7 +306,7 @@ class AccountDetailsWidget extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Container(
               width: double.infinity,
-              height: 160.h,
+              height: 200.h,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25.r),
@@ -337,23 +348,20 @@ class AccountDetailsWidget extends ConsumerWidget {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Container(
-                            width: 50.w,
-                            height: 50.h,
-                            color: AppColors.purple,
+                          child: CircularProgressWidget(
+                            title: '${utilizationPercent.toStringAsFixed(0)}%',
+
+                            subtitle: Utils.utilizationStatus(
+                              utilizationPercent,
+                            ),
+
+                            percent: utilizationPercent / 100,
                           ),
                         ),
                       ],
                     ),
                     SizedBox(height: 10.h),
-                    Container(
-                      width: double.infinity,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.purple,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
+                    BalancePercentageBar(percentage: utilizationPercent),
                   ],
                 ),
               ),
