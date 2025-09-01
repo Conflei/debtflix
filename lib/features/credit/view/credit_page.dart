@@ -126,7 +126,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                                     SizedBox(width: 10.w),
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.green,
+                                        color: AppColors.lightGreen,
                                         borderRadius: BorderRadius.circular(
                                           20.r,
                                         ),
@@ -156,7 +156,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                                   style: TextStyle(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
+                                    color: AppColors.purpleTitleLight,
                                   ),
                                 ),
                                 Text(
@@ -164,7 +164,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w800,
-                                    color: AppColors.purple.withAlpha(128),
+                                    color: AppColors.lightPurple,
                                   ),
                                 ),
                               ],
@@ -185,12 +185,9 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                 ),
               ),
 
-              // SizedBox(height: 20.h),
+              SizedBox(height: 20.h),
 
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //   child: CreditScoreChart(),
-              // ),
+              CreditScoreChart(),
 
               // // SizedBox(height: 20.h),
 

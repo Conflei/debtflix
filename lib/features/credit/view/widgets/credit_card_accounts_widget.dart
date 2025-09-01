@@ -1,4 +1,5 @@
 import 'package:debtflix/core/misc/app_colors.dart';
+import 'package:debtflix/core/misc/utils.dart';
 import 'package:debtflix/features/user/providers/user_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,11 +24,11 @@ class CreditCardAccountsWidget extends ConsumerWidget {
       );
     }
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          Row(
             children: [
               Text(
                 "Open credit card accounts",
@@ -35,11 +36,8 @@ class CreditCardAccountsWidget extends ConsumerWidget {
               ),
             ],
           ),
-        ),
-        SizedBox(height: 20.h),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Container(
+          SizedBox(height: 20.h),
+          Container(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(25.r),
@@ -53,7 +51,12 @@ class CreditCardAccountsWidget extends ConsumerWidget {
                 final creditCardAccount =
                     user.creditData.creditCardAccounts[index];
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                    left: 16.0,
+                    right: 16.0,
+                    bottom: 0.0,
+                  ),
                   child: Container(
                     width: double.infinity,
 
@@ -69,42 +72,97 @@ class CreditCardAccountsWidget extends ConsumerWidget {
                             Text(
                               creditCardAccount.name,
                               style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
+                                color: AppColors.purpleTitle,
                               ),
                             ),
                             Text(
                               "${(creditCardAccount.balance / creditCardAccount.limit * 100).toStringAsFixed(0)}%",
                               style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
+                                color: AppColors.purpleTitle,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 4.h),
+                        SizedBox(height: 10.h),
                         Container(
                           width: double.infinity,
-                          height: 4.h,
-                          decoration: BoxDecoration(color: AppColors.purple),
+                          height: 8.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.lightGrey,
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                          child: TweenAnimationBuilder<double>(
+                            duration: const Duration(milliseconds: 1500),
+                            curve: Curves.easeOutCubic,
+                            tween: Tween<double>(
+                              begin: 0.0,
+                              end:
+                                  (creditCardAccount.balance /
+                                          creditCardAccount.limit)
+                                      .clamp(0.0, 1.0),
+                            ),
+                            builder: (context, value, child) {
+                              return FractionallySizedBox(
+                                alignment: Alignment.centerLeft,
+                                widthFactor: value,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.lightGreen,
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                        SizedBox(height: 4.h),
+                        SizedBox(height: 10.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${creditCardAccount.balance.toString()} Balance",
+                              "${Utils.formatCurrency(creditCardAccount.balance)} Balance",
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.purpleTitle,
+                              ),
                             ),
-                            Text("${creditCardAccount.limit.toString()} Limit"),
+                            Text(
+                              "${Utils.formatCurrency(creditCardAccount.limit)} Limit",
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.purpleTitle,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(height: 10.h),
-                        Text(
-                          "Reported on ${creditCardAccount.lastReported.toString()}",
+                        Row(
+                          children: [
+                            Text(
+                              "Reported on ${Utils.formatDate(creditCardAccount.lastReported)}",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.purpleTitleLight,
+                              ),
+                            ),
+                          ],
                         ),
+
                         if (index <
                             user.creditData.creditCardAccounts.length - 1)
-                          Divider(),
+                          Column(
+                            children: [
+                              SizedBox(height: 10.h),
+                              Divider(),
+                            ],
+                          ),
                       ],
                     ),
                   ),
@@ -112,8 +170,8 @@ class CreditCardAccountsWidget extends ConsumerWidget {
               },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

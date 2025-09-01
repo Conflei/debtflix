@@ -51,3 +51,6 @@ icons:
 
 # Setup with icons
 setup-with-icons: get gen icons
+
+# Setup with all dependencies
+setup-all: get gen icons
