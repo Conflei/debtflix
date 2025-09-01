@@ -5,11 +5,15 @@ class CreditData {
   final int creditScore;
   final List<MapEntry<DateTime, int>> prevScores; // previous reports
   final List<CreditCardAccount> creditCardAccounts;
+  final CreditCardAccount avaCreditCard;
+  final int spendLimit;
 
   CreditData({
     required this.creditScore,
     required this.prevScores,
     required this.creditCardAccounts,
+    required this.avaCreditCard,
+    required this.spendLimit,
   });
 }
 
@@ -38,10 +42,16 @@ class CreditDataAdapter extends TypeAdapter<CreditData> {
       accounts.add(reader.read() as CreditCardAccount);
     }
 
+    // read avaCreditCard
+    final avaCreditCard = reader.read() as CreditCardAccount;
+    final spendLimit = reader.readInt();
+
     return CreditData(
       creditScore: creditScore,
       prevScores: prevScores,
       creditCardAccounts: accounts,
+      avaCreditCard: avaCreditCard,
+      spendLimit: spendLimit,
     );
   }
 
@@ -62,5 +72,9 @@ class CreditDataAdapter extends TypeAdapter<CreditData> {
     for (var account in obj.creditCardAccounts) {
       writer.write(account);
     }
+
+    // write avaCreditCard
+    writer.write(obj.avaCreditCard);
+    writer.writeInt(obj.spendLimit);
   }
 }

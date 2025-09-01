@@ -58,7 +58,7 @@ Future<void> _initializeDefaultUser() async {
           creditCardAccounts: [
             CreditCardAccount(
               name: "Syncb/Amazon",
-              balance: 600,
+              balance: 998,
               limit: 1000,
               lastReported: DateTime.now(),
             ),
@@ -69,12 +69,19 @@ Future<void> _initializeDefaultUser() async {
               lastReported: DateTime.now().subtract(Duration(days: 20)),
             ),
             CreditCardAccount(
-              name: "Best Egg",
-              balance: 200,
-              limit: 6000,
+              name: "AVA Credit Card",
+              balance: 30,
+              limit: 600,
               lastReported: DateTime.now().subtract(Duration(days: 5)),
             ),
           ],
+          avaCreditCard: CreditCardAccount(
+            name: "AVA Credit Card",
+            balance: 30,
+            limit: 600,
+            lastReported: DateTime.now().subtract(Duration(days: 5)),
+          ),
+          spendLimit: 75,
         ),
       );
 

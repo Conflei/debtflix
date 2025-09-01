@@ -189,13 +189,13 @@ class _CreditPageState extends ConsumerState<CreditPage> {
 
               CreditScoreChart(),
 
-              // // SizedBox(height: 20.h),
+              SizedBox(height: 20.h),
 
               // // CreditFactorsScroll(),
               // SizedBox(height: 20.h),
-              // AccountDetailsWidget(),
+              AccountDetailsWidget(),
               SizedBox(height: 20.h),
-              CreditCardAccountsWidget(),
+              // CreditCardAccountsWidget(),
               SizedBox(height: 400.h),
             ],
           ),
