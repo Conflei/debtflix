@@ -34,7 +34,7 @@ class _CircularProgressWidgetState extends State<CircularProgressWidget> {
             widget.title,
             style: GoogleFonts.anton(
               textStyle: TextStyle(
-                fontSize: 28.sp,
+                fontSize: 26.sp,
                 fontWeight: FontWeight.w100,
                 color: Colors.black,
               ),

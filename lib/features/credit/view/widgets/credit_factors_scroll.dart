@@ -50,7 +50,11 @@ class CreditFactorsScroll extends StatelessWidget {
             children: [
               Text(
                 "Credit Factors",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.purpleTitle,
+                ),
               ),
             ],
           ),
@@ -85,7 +89,7 @@ class CreditFactorsScroll extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: AppColors.purpleTitle,
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 2,

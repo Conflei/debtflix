@@ -88,8 +88,8 @@ class EmploymentDataAdapter extends TypeAdapter<EmploymentData> {
     writer.writeString(obj.employer);
     writer.writeString(obj.jobTitle);
     writer.writeInt(obj.annualIncome);
-    writer.writeString(obj.employerAddress);
     writer.writeString(obj.payFrequency.displayName);
+    writer.writeString(obj.employerAddress);
     writer.writeInt(obj.yearsAtEmployer);
     writer.writeInt(obj.monthsAtEmployer);
     writer.writeString(obj.nextPayDate);

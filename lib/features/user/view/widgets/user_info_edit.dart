@@ -326,18 +326,61 @@ class _UserInfoEditState extends ConsumerState<UserInfoEdit> {
                             color: AppColors.grey.withAlpha(100),
                           ),
                         ),
-                        child: TextFormField(
-                          initialValue: user.employmentData.nextPayDate,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate:
+                                  DateTime.tryParse(
+                                    user.employmentData.nextPayDate,
+                                  ) ??
+                                  DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(
+                                const Duration(days: 365),
+                              ),
+                            );
+                            if (pickedDate != null) {
+                              ref
+                                  .read(userProvider.notifier)
+                                  .updateNextPayDate(
+                                    pickedDate.toIso8601String(),
+                                  );
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                              vertical: 12.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  user.employmentData.nextPayDate.isNotEmpty
+                                      ? Utils.formatNextPayDate(
+                                          user.employmentData.nextPayDate,
+                                        )
+                                      : 'Select next pay date',
+                                  style: TextStyle(
+                                    color:
+                                        user
+                                            .employmentData
+                                            .nextPayDate
+                                            .isNotEmpty
+                                        ? Colors.black87
+                                        : Colors.grey.shade600,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.calendar_today,
+                                  color: AppColors.grey,
+                                  size: 20.sp,
+                                ),
+                              ],
                             ),
                           ),
-                          onChanged: (value) {
-                            ref
-                                .read(userProvider.notifier)
-                                .updateNextPayDate(value);
-                          },
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -351,15 +394,107 @@ class _UserInfoEditState extends ConsumerState<UserInfoEdit> {
                       SizedBox(height: 8.h),
                       Row(
                         children: [
-                          Checkbox(
-                            value: user.employmentData.isDirectDeposit,
-                            onChanged: (value) {
-                              ref
-                                  .read(userProvider.notifier)
-                                  .updateIsDirectDeposit(value ?? false);
-                            },
+                          Row(
+                            children: [
+                              Container(
+                                width: 25.w,
+                                height: 25.h,
+                                decoration: BoxDecoration(
+                                  color: user.employmentData.isDirectDeposit
+                                      ? Colors.white
+                                      : Colors.transparent,
+                                  shape: BoxShape.circle,
+
+                                  border: Border.all(
+                                    color: user.employmentData.isDirectDeposit
+                                        ? AppColors.purple
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Checkbox(
+                                    value: user.employmentData.isDirectDeposit,
+                                    shape: const CircleBorder(),
+                                    checkColor: Colors.transparent,
+                                    fillColor:
+                                        WidgetStateProperty.resolveWith<Color>((
+                                          Set<WidgetState> states,
+                                        ) {
+                                          if (states.contains(
+                                            WidgetState.selected,
+                                          )) {
+                                            return AppColors.purple;
+                                          }
+                                          return Colors.white;
+                                        }),
+                                    side: BorderSide(
+                                      color: AppColors.grey.withAlpha(100),
+                                      width: 1.0,
+                                    ),
+                                    onChanged: (value) {
+                                      ref
+                                          .read(userProvider.notifier)
+                                          .updateIsDirectDeposit(true);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 6.w),
+                              Text("Yes"),
+                            ],
                           ),
-                          const Text("Direct Deposit"),
+                          SizedBox(width: 20.w),
+                          Row(
+                            children: [
+                              Container(
+                                width: 25.w,
+                                height: 25.h,
+                                decoration: BoxDecoration(
+                                  color: !user.employmentData.isDirectDeposit
+                                      ? Colors.white
+                                      : Colors.transparent,
+                                  shape: BoxShape.circle,
+
+                                  border: Border.all(
+                                    color: !user.employmentData.isDirectDeposit
+                                        ? AppColors.purple
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Checkbox(
+                                    value: !user.employmentData.isDirectDeposit,
+                                    shape: const CircleBorder(),
+                                    checkColor: Colors.transparent,
+                                    fillColor:
+                                        WidgetStateProperty.resolveWith<Color>((
+                                          Set<WidgetState> states,
+                                        ) {
+                                          if (states.contains(
+                                            WidgetState.selected,
+                                          )) {
+                                            return AppColors.purple;
+                                          }
+                                          return Colors.white;
+                                        }),
+                                    side: BorderSide(
+                                      color: AppColors.grey.withAlpha(100),
+                                      width: 1.0,
+                                    ),
+                                    onChanged: (value) {
+                                      ref
+                                          .read(userProvider.notifier)
+                                          .updateIsDirectDeposit(false);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 6.w),
+                              Text("No"),
+                            ],
+                          ),
                         ],
                       ),
                       SizedBox(height: 16.h),

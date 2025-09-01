@@ -136,6 +136,7 @@ class AccountDetailsWidget extends ConsumerWidget {
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
+                    color: AppColors.purpleTitle,
                   ),
                 ),
               ],
@@ -326,20 +327,36 @@ class AccountDetailsWidget extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Total Balance: ${Utils.formatCurrency(_calculateTotalBalance(user.creditData.creditCardAccounts))}",
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w700,
+                                RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.purpleTitle,
+                                    ),
+                                    children: [
+                                      TextSpan(text: "Total Balance: "),
+                                      TextSpan(
+                                        text: Utils.formatCurrency(
+                                          _calculateTotalBalance(
+                                            user.creditData.creditCardAccounts,
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          color: AppColors.lightGreen,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(height: 10.h),
+                                SizedBox(height: 8.h),
                                 Text(
                                   "Total limit: ${Utils.formatCurrency(_calculateTotalLimit(user.creditData.creditCardAccounts))}",
                                   style: TextStyle(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
+                                    color: AppColors.purpleTitleLight,
                                   ),
                                 ),
                               ],

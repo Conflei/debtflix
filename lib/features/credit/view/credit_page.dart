@@ -135,7 +135,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
                                         ),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
+                                        padding: const EdgeInsets.all(0.0),
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 6.0,
@@ -199,8 +199,8 @@ class _CreditPageState extends ConsumerState<CreditPage> {
 
               SizedBox(height: 20.h),
 
-              // // CreditFactorsScroll(),
-              // SizedBox(height: 20.h),
+              CreditFactorsScroll(),
+              SizedBox(height: 20.h),
               AccountDetailsWidget(),
               SizedBox(height: 20.h),
               CreditCardAccountsWidget(),

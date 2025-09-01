@@ -43,26 +43,21 @@ class CreditCardAccountsWidget extends ConsumerWidget {
               borderRadius: BorderRadius.circular(25.r),
               border: Border.all(color: Colors.grey.shade400, width: 1.w),
             ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: user.creditData.creditCardAccounts.length,
-              itemBuilder: (context, index) {
-                final creditCardAccount =
-                    user.creditData.creditCardAccounts[index];
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10.0,
-                    left: 16.0,
-                    right: 16.0,
-                    bottom: 0.0,
-                  ),
-                  child: Container(
-                    width: double.infinity,
-
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25.r),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: user.creditData.creditCardAccounts.length,
+                itemBuilder: (context, index) {
+                  final creditCardAccount =
+                      user.creditData.creditCardAccounts[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      left: 16.0,
+                      right: 16.0,
+                      bottom: 0.0,
                     ),
                     child: Column(
                       children: [
@@ -165,9 +160,9 @@ class CreditCardAccountsWidget extends ConsumerWidget {
                           ),
                       ],
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ],
