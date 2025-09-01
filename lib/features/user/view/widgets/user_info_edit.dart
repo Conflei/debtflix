@@ -33,6 +33,17 @@ class _UserInfoEditState extends ConsumerState<UserInfoEdit> {
   }
 
   void _save() async {
+    // Validate form before saving
+    if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please fix the errors in the form"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     await ref.read(userProvider.notifier).saveUser();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("User data updated successfully!")),
@@ -172,6 +183,15 @@ class _UserInfoEditState extends ConsumerState<UserInfoEdit> {
                               borderSide: BorderSide.none,
                             ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Employer is required';
+                            }
+                            if (value.trim().length < 2) {
+                              return 'Employer name must be at least 2 characters';
+                            }
+                            return null;
+                          },
                           onChanged: (value) {
                             ref
                                 .read(userProvider.notifier)
@@ -203,6 +223,15 @@ class _UserInfoEditState extends ConsumerState<UserInfoEdit> {
                               borderSide: BorderSide.none,
                             ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Job title is required';
+                            }
+                            if (value.trim().length < 2) {
+                              return 'Job title must be at least 2 characters';
+                            }
+                            return null;
+                          },
                           onChanged: (value) {
                             ref
                                 .read(userProvider.notifier)
@@ -238,6 +267,29 @@ class _UserInfoEditState extends ConsumerState<UserInfoEdit> {
                               borderSide: BorderSide.none,
                             ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Annual income is required';
+                            }
+                            final cleanValue = value.replaceAll(
+                              RegExp(r'[^\d]'),
+                              '',
+                            );
+                            if (cleanValue.isEmpty) {
+                              return 'Please enter a valid number';
+                            }
+                            final income = int.tryParse(cleanValue);
+                            if (income == null) {
+                              return 'Please enter a valid number';
+                            }
+                            if (income < 10000) {
+                              return 'Annual income must be at least \$10,000';
+                            }
+                            if (income > 10000000) {
+                              return 'Annual income cannot exceed \$10,000,000';
+                            }
+                            return null;
+                          },
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
