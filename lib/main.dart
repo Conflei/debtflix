@@ -81,7 +81,7 @@ Future<void> _initializeDefaultUser() async {
             limit: 600,
             lastReported: DateTime.now().subtract(Duration(days: 5)),
           ),
-          spendLimit: 75,
+          spendLimit: 90,
         ),
       );
 

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:debtflix/core/misc/app_colors.dart';
 import 'package:debtflix/core/misc/utils.dart';
 import 'package:debtflix/data/models/credit_card_account.dart';
@@ -15,6 +17,84 @@ class AccountDetailsWidget extends ConsumerWidget {
 
   int _calculateTotalLimit(List<CreditCardAccount> creditCardAccounts) {
     return creditCardAccounts.fold(0, (sum, account) => sum + account.limit);
+  }
+
+  Widget _spentLimitWidget(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+
+    if (user == null) {
+      return Container();
+    }
+
+    return SizedBox(
+      width: double.infinity,
+
+      child: TweenAnimationBuilder<double>(
+        duration: const Duration(milliseconds: 1500),
+        curve: Curves.easeOutCubic,
+        tween: Tween<double>(
+          begin: 0.0,
+          end:
+              (user.creditData.spendLimit / user.creditData.avaCreditCard.limit)
+                  .clamp(0.0, 1.0),
+        ),
+        builder: (context, value, child) {
+          return FractionallySizedBox(
+            alignment: Alignment.centerLeft,
+            widthFactor: value * 1,
+            child: Container(
+              alignment: Alignment.topRight,
+
+              child: Transform.translate(
+                offset: Offset(22.5.w, 0),
+                child: Container(
+                  width: 50.w,
+                  height: 50.h,
+                  color: Colors.transparent,
+
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Positioned(
+                        bottom: 15,
+                        child: Transform.rotate(
+                          angle: math.pi / 4,
+                          child: Container(
+                            width: 15.w,
+                            height: 15.h,
+                            decoration: BoxDecoration(color: AppColors.purple),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 40.w,
+                        height: 30.h,
+                        decoration: BoxDecoration(
+                          color: AppColors.purple,
+                          borderRadius: BorderRadius.circular(5.r),
+                        ),
+                        child: Center(
+                          child: Text(
+                            Utils.formatCurrency(user.creditData.spendLimit),
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -51,11 +131,12 @@ class AccountDetailsWidget extends ConsumerWidget {
             ),
           ),
           SizedBox(height: 20.h),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Container(
               width: double.infinity,
-              height: 200.h,
+
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25.r),
@@ -66,10 +147,51 @@ class AccountDetailsWidget extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    _spentLimitWidget(context, ref),
+
+                    Container(
+                      width: double.infinity,
+                      height: 8.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.paleGreen,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                      child: TweenAnimationBuilder<double>(
+                        duration: const Duration(milliseconds: 1500),
+                        curve: Curves.easeOutCubic,
+                        tween: Tween<double>(
+                          begin: 0.0,
+                          end:
+                              (user.creditData.spendLimit /
+                                      user.creditData.avaCreditCard.limit)
+                                  .clamp(0.0, 1.0),
+                        ),
+                        builder: (context, value, child) {
+                          return FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: value,
+                            child: Container(
+                              alignment: Alignment.centerRight,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              child: Container(
+                                width: 5.w,
+                                decoration: BoxDecoration(
+                                  color: AppColors.darkGreen,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                           color: Colors.black87,
                         ),
                         children: [
@@ -80,14 +202,15 @@ class AccountDetailsWidget extends ConsumerWidget {
                           TextSpan(
                             text: "Why is this different?",
                             style: TextStyle(
-                              color: AppColors.purple,
+                              color: AppColors.lightPurple,
                               fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -101,9 +224,17 @@ class AccountDetailsWidget extends ConsumerWidget {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.sp,
+                                color: AppColors.purpleTitle,
                               ),
                             ),
-                            Text("Balance"),
+                            Text(
+                              "Balance",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.purpleTitle,
+                              ),
+                            ),
                           ],
                         ),
                         Column(
@@ -116,21 +247,36 @@ class AccountDetailsWidget extends ConsumerWidget {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.sp,
+                                color: AppColors.purpleTitle,
                               ),
                             ),
-                            Text("Credit Limit"),
+                            Text(
+                              "Credit Limit",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.purpleTitle,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.h),
+
                     Divider(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Utilization"),
                         Text(
-                          "4%",
+                          "Utilization",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.purpleTitle,
+                          ),
+                        ),
+                        Text(
+                          "${((user.creditData.avaCreditCard.balance / user.creditData.avaCreditCard.limit) * 100).toStringAsFixed(0)}%",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp,
