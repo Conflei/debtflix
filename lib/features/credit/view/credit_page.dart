@@ -204,7 +204,7 @@ class _CreditPageState extends ConsumerState<CreditPage> {
               AccountDetailsWidget(),
               SizedBox(height: 20.h),
               CreditCardAccountsWidget(),
-              SizedBox(height: 400.h),
+              SizedBox(height: 200.h),
             ],
           ),
         ),

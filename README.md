@@ -73,15 +73,15 @@ make rebuild      # Clean & rebuild
 
 ```bash
 flutter test test/unit/utils_test.dart    # Run Utils tests
-flutter test test/widget/utils_widget_test.dart  # Run Widget tests
+flutter test test/widget/circular_progress_widget_test.dart  # Run Widget tests
 flutter test                              # Run all tests
 ```
 
 ## 📱 Platform Support
 
-- **iOS** - iPhone and iPad
-- **Android** - Phones and tablets
+- **iOS** - iPhone
+- **Android** - Phones
 
 ---
 
-_Built with ❤️ using Flutter, Riverpod, and Hive_
+_Built by Felix with ❤️ using Flutter, Riverpod, and Hive_
